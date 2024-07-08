@@ -37,6 +37,13 @@ extern float gsl_quat_float_norm(gsl_quat_float* pQ);
 extern void gsl_quat_float_normamilize(gsl_quat_float* pQ);
 
 /**
+ * @brief Gets the conjugate of pQ
+ * @param pQ Pointer to the quat to calculate the conjugate of
+ * @return Pointer to the conjugate o pQ
+ */
+extern gsl_quat_float* gsl_quat_float_conjugate(gsl_quat_float* pQ);
+
+/**
  * @brief Copies the data of pSrc to pDst
  * @param pSrc Pointer to the quat to copy from
  * @param pDst Pointer to the quat to copy to

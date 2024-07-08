@@ -8,11 +8,14 @@
         "unity.h": "c",
         "array": "c",
         "string": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "gsl_const.h": "c",
+        "gsl_const_num.h": "c",
+        "gsl_const_cgs.h": "c",
+        "gsl_const_mks.h": "c",
+        "gsl_const_mksa.h": "c",
+        "gsl_const_cgsm.h": "c",
+        "gsl_math.h": "c"
     },
-    "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
-    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
-    "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "sameLine",
-    "editor.defaultFormatter": "ms-vscode.cpptools",
     "C_Cpp.clang_format_fallbackStyle": "Google"
 }

@@ -57,6 +57,17 @@ void gsl_quat_float_normamilize(gsl_quat_float *q) {
   gsl_vector_float_scale(q, 1 / norm);
 }
 
+gsl_quat_float *gsl_quat_float_conjugate(gsl_quat_float *pQ) {
+  gsl_quat_float *pConjQ = gsl_quat_float_alloc();
+
+  pConjQ->data[0] = pQ->data[0];
+  pConjQ->data[1] = -pQ->data[1];
+  pConjQ->data[2] = -pQ->data[2];
+  pConjQ->data[3] = -pQ->data[3];
+
+  return pConjQ;
+}
+
 void gsl_quat_float_copy(gsl_quat_float *qSrc, gsl_quat_float *qDst) {
   for (uint8_t i = 0; i < QUAT_SIZE; i++) {
     qDst->data[i] = qSrc->data[i];
@@ -76,6 +87,22 @@ gsl_quat_float *gsl_quat_float_product(gsl_quat_float *q1, gsl_quat_float *q2) {
                 q1->data[2] * q2->data[1] + q1->data[3] * q2->data[0];
 
   return q3;
+}
+
+gsl_quat_float *gsl_quat_float_fromAxis(gsl_vector_float *pAxis,
+                                        float angleRad) {
+  gsl_quat_float *pQ = gsl_quat_float_alloc();
+
+  float sinHalfAngle = sinf(angleRad / 2);
+
+  pQ->data[0] = cosf(angleRad / 2);
+  pQ->data[1] = pAxis->data[0] * sinHalfAngle;
+  pQ->data[2] = pAxis->data[1] * sinHalfAngle;
+  pQ->data[3] = pAxis->data[2] * sinHalfAngle;
+
+  gsl_quat_float_normamilize(pQ);
+
+  return pQ;
 }
 
 /**
