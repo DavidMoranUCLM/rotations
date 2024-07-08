@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "inttypes.h": "c",
+        "gsl_vector_float.h": "c",
+        "stdlib.h": "c",
+        "quaternions.h": "c",
+        "math.h": "c",
+        "unity.h": "c"
+    }
+}
