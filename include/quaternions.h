@@ -68,4 +68,11 @@ extern gsl_quat_float* gsl_quat_float_product(gsl_quat_float* pQ1,
 extern gsl_quat_float* gsl_quat_float_fromAxis(gsl_vector_float* pAxis,
                                                float angleRad);
 
+/**
+ * @brief Creates a quat [0, v0, v1, v2] from a vector [v0, v1, v2]
+ * @param pAxis Pointer to the vector to use as an axis
+ * @return Pointer to the created quat
+ */
+extern gsl_quat_float* gsl_quat_float_fromVector(gsl_vector_float* pVector);                                               
+
 #endif

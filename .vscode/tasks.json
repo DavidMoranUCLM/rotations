@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cmake",
+			"label": "CMake: Build",
+			"command": "build",
+			"targets": [
+				"all"
+			]
+		},
+		{
+			"label": "CMake: Launch",
+			"command": "${workspaceFolder}/build/base/tests/unity_test",
+		},
+		{
+			"label": "CMake: Build & Launch",
+			"dependsOn": [
+				"CMake: build",
+				"CMake: Launch"
+			],
+			"problemMatcher": [],
+			"presentation": {"echo": true, "reveal": "always", "focus": false, "panel": "shared", "showReuseMessage": false, "clear": true}
+		}
+	]
+}

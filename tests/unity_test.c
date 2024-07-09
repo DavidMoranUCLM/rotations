@@ -3,14 +3,14 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "quaternions.h"
 #include "gsl/gsl_math.h"
-
+#include "quaternions.h"
 
 #define PROD_NORM_ITER 10000
 #define FLOAT_ERROR 1e-6
 
-#define TEST_ASSERT_QUAT(q1,q2) TEST_ASSERT_EQUAL_FLOAT_ARRAY((q1->data),(q2->data),(4))
+#define TEST_ASSERT_QUAT(q1, q2) \
+  TEST_ASSERT_EQUAL_FLOAT_ARRAY((q1->data), (q2->data), (4))
 
 void setUp(void) {}
 void tearDown(void) {}
@@ -20,8 +20,6 @@ int suiteTearDown(int num_failures) {}
 
 void resetTest(void) {}
 void verifyTest(void) {}
-
-
 
 void randQuat(gsl_quat_float* q) {
   for (int8_t i = 0; i < q->size; i++) {
@@ -33,7 +31,6 @@ void isNormalized(gsl_quat_float* q) {
   float norm = gsl_quat_float_norm(q);
   TEST_ASSERT_EQUAL_FLOAT(1, norm);
 }
-
 
 void testQuatAlloc(void) {
   gsl_quat_float* q = gsl_quat_float_alloc();
@@ -88,7 +85,7 @@ void testQuatNormalize(void) {
   isNormalized(q);
 }
 
-void testQuatConjugate(void){
+void testQuatConjugate(void) {
   gsl_quat_float* pQ1 = gsl_quat_float_alloc();
   gsl_quat_float* pQ1Conj = gsl_quat_float_alloc();
   gsl_quat_float* pQ1ConjRef = gsl_quat_float_alloc();
@@ -172,13 +169,13 @@ void testQuatProdNorm(void) {
   gsl_quat_float_free(q3);
 }
 
-void testQuatFromAxis(void){
+void testQuatFromAxis(void) {
   gsl_quat_float* pQ1 = gsl_quat_float_calloc();
   gsl_quat_float* pQ1Ref = gsl_quat_float_calloc();
 
   gsl_vector_float* pAxis = gsl_vector_float_calloc(3);
 
-  float angle = M_PI/4;
+  float angle = M_PI / 4;
   pAxis->data[0] = 0;
   pAxis->data[1] = 0;
   pAxis->data[2] = 1;
@@ -192,12 +189,41 @@ void testQuatFromAxis(void){
 
   TEST_ASSERT_QUAT(pQ1Ref, pQ1);
 
+  pAxis->data[0] = 0;
+  pAxis->data[1] = 0;
+  pAxis->data[2] = 0;
+
+  gsl_quat_float_free(pQ1);
+
+  pQ1 = gsl_quat_float_fromAxis(pAxis, angle);
+
+  TEST_ASSERT_NULL(pQ1);
+
   gsl_quat_float_free(pQ1);
   gsl_quat_float_free(pQ1Ref);
-  gsl_vector_float_free(pAxis);
+  gsl_quat_float_free(pAxis);
 }
 
+void testQuatFromVector(void) {
+  gsl_quat_float* pQ1;
+  gsl_vector_float* pV1 = gsl_vector_float_alloc(3);
 
+  randQuat(pV1);
+
+  pQ1 = gsl_quat_float_fromVector(pV1);
+
+  TEST_ASSERT_EQUAL_FLOAT(.0f, pQ1->data[0]);
+  TEST_ASSERT_EQUAL_FLOAT_ARRAY(pV1->data, pQ1->data + 1, 3);
+
+  free(pV1);
+
+  pV1 = gsl_vector_float_alloc(4);
+  randQuat(pV1);
+
+  pQ1 = gsl_quat_float_fromVector(pV1);
+
+  TEST_ASSERT_NULL(pQ1);
+}
 
 int main(void) {
   UNITY_BEGIN();
@@ -210,5 +236,6 @@ int main(void) {
   RUN_TEST(testQuatProd);
   RUN_TEST(testQuatProdNorm);
   RUN_TEST(testQuatFromAxis);
+  RUN_TEST(testQuatFromVector);
   return UNITY_END();
 }

@@ -5,19 +5,11 @@
 
 #define QUAT_SIZE 4
 #define NORMALIZE_DELTA (nextafterf(1, 2) - 1)
+#define QUAT_MINIMUM_AXIS_NORM 1e-3f
 
 /**
  * Private definitions
  **/
-
-enum QUAT_PROD_E { QUAT_1 = 0, QUAT_I, QUAT_J, QUAT_K, QUAT_MAX };
-
-const int8_t quatProdTable[QUAT_MAX][QUAT_MAX] = {
-    {QUAT_1, QUAT_I, QUAT_J, QUAT_K},
-    {QUAT_I, -QUAT_1, QUAT_K, -QUAT_J},
-    {QUAT_J, -QUAT_K, -QUAT_1, QUAT_I},
-    {QUAT_K, QUAT_J, -QUAT_I, -QUAT_1},
-};
 
 /**
  * Private functions declarations
@@ -91,6 +83,14 @@ gsl_quat_float *gsl_quat_float_product(gsl_quat_float *q1, gsl_quat_float *q2) {
 
 gsl_quat_float *gsl_quat_float_fromAxis(gsl_vector_float *pAxis,
                                         float angleRad) {
+  if (pAxis->size != 3) {
+    return NULL;
+  }
+
+  if (gsl_quat_float_norm(pAxis) < QUAT_MINIMUM_AXIS_NORM){
+    return NULL;;
+  }
+
   gsl_quat_float *pQ = gsl_quat_float_alloc();
 
   float sinHalfAngle = sinf(angleRad / 2);
@@ -101,6 +101,19 @@ gsl_quat_float *gsl_quat_float_fromAxis(gsl_vector_float *pAxis,
   pQ->data[3] = pAxis->data[2] * sinHalfAngle;
 
   gsl_quat_float_normamilize(pQ);
+
+  return pQ;
+}
+
+gsl_quat_float *gsl_quat_float_fromVector(gsl_vector_float *pVector) {
+  if (pVector->size != 3) {
+    return NULL;
+  }
+
+  gsl_quat_float *pQ = gsl_quat_float_calloc();
+  for (uint8_t i = 0; i < pVector->size; i++) {
+    pQ->data[i + 1] = pVector->data[i];
+  }
 
   return pQ;
 }

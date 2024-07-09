@@ -15,7 +15,9 @@
         "gsl_const_mks.h": "c",
         "gsl_const_mksa.h": "c",
         "gsl_const_cgsm.h": "c",
-        "gsl_math.h": "c"
+        "gsl_math.h": "c",
+        "initializer_list": "c",
+        "utility": "c"
     },
     "C_Cpp.clang_format_fallbackStyle": "Google"
 }

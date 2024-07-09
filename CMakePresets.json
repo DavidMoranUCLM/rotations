@@ -12,5 +12,6 @@
                 "CMAKE_TOOLCHAIN_FILE": "",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}"
             }
-        }]
+        }
+    ]
 }
