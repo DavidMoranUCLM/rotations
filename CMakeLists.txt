@@ -3,8 +3,10 @@ project(quaternions VERSION 0.1.0 LANGUAGES C)
 
 include(CTest)
 
-find_package(GSL REQUIRED)
-link_libraries(GSL::gsl GSL::gslcblas)
+#set(${GSL_ROOT_DIR} ${CMAKE_SOURCE_DIR}/gsl/build)
+#find_package(GSL REQUIRED)
+add_subdirectory(gsl)
+link_libraries(gsl gslcblas)
 
 add_subdirectory(src)
 add_subdirectory(unity)
