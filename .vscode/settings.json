@@ -19,5 +19,6 @@
         "initializer_list": "c",
         "utility": "c"
     },
-    "C_Cpp.clang_format_fallbackStyle": "Google"
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "cmake.configureOnOpen": true,
 }
